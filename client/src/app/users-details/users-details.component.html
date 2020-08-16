@@ -1,0 +1,16 @@
+
+<div *ngIf="user; else userNotFound">
+  <h2>User details</h2>
+  <p>Username: <b>{{ user.userName }}</b></p>
+  <p>First name: <b>{{ user.firstName }}</b></p>
+  <p>Last name: <b>{{ user.lastName }}</b></p>
+  <p>Email: <b>{{ user.email }}</b></p>
+  <p>Status: <b>{{ user.status }}</b></p>
+</div>
+
+<ng-template #userNotFound>
+  <h2>User not found</h2>
+</ng-template>
+<hr>
+<a routerLink="" class="btn btn-success">Home</a>
+<a routerLink="/users" class="btn btn-success ml-4">All Users</a>
