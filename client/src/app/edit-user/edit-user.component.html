@@ -1,16 +1,8 @@
-<h2>Welcome to Users</h2>
+<h2>Edit current user</h2>
+<hr>
 
-<div class="alert alert-success" *ngIf='success_message'>
-  {{ success_message }}
-</div>
-
-<div class="alert alert-danger" *ngIf='error_message'>
-  {{ error_message }}
-</div>
-
-
-<form method="POST" enctype="application/x-www-form-urlencoded">
-
+<div *ngIf="user; else userNotFound">
+  <form method="POST" enctype="application/x-www-form-urlencoded">
     <div class="form-group row">
       <label for="userName" class="col-12 col-md-2 offset-md-1">Username</label>
       <div class="col-12 col-md-8 col-lg-6">
@@ -35,11 +27,27 @@
         <input class="form-control" type="text" name="email" [(ngModel)]="user.email">
       </div>
     </div>
-  
+    <div class="form-group row">
+      <label for="status" class="col-12 col-md-2 offset-md-1">Status</label>
+      <div class="col-12 col-md-8 col-lg-6">
+        <select name="status" class="form-control" [(ngModel)]="user.status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="deleted">Deleted</option>
+        </select>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-12">
-        <input type="button" (click)="createNewUser()" class="btn btn-outline-success offset-md-1 mr-3" value="Create user">
+        <button (click)="updateUser()" class="btn btn-outline-success offset-md-1 mr-3">Update</button>
         <a routerLink="" class="btn btn-success">List users</a>
       </div>
     </div>
-</form>
+  </form>
+</div>
+
+<ng-template #userNotFound>
+  <h3>User not found</h3>
+  <a routerLink="" class="btn btn-success">List users</a>
+</ng-template>

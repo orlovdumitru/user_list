@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { User } from '../user';
 import { UsersService } from '../users.service';
 
@@ -14,7 +14,8 @@ export class UsersHomeComponent implements OnInit {
   // @Output() createUser = new EventEmitter();
 
   public user: User;
-  public message: string = '';
+  public success_message: string = '';
+  public error_message: string = '';
 
   resetUser(){
     this.user = {
@@ -23,6 +24,7 @@ export class UsersHomeComponent implements OnInit {
       'firstName': '',
       'lastName': '',
       'email': '',
+      'status': '',
     };
   }
 
@@ -31,18 +33,21 @@ export class UsersHomeComponent implements OnInit {
   }
 
   createNewUser(){
-    // this.createUser.emit(this.user);
     this._usersService.createUser(this.user).subscribe(
       data =>{
-        // console.log(data);
-        this.message = data['message'];
+        this.success_message = data['message'];
         this.resetUser();
       },
       error =>{
-        // console.log(error.error['message']);
-        this.message = error.error['message'];
+        this.error_message = error.error['message'];
       }
     );
+    setTimeout(function(){
+      let dom_elements = document.getElementsByClassName('alert');
+      while (dom_elements.length > 0){
+        dom_elements[0].remove();
+      }
+    }, 5000);
   }
 
 }

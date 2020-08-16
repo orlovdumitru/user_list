@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users-list',
@@ -9,8 +10,11 @@ import { UsersService } from '../users.service';
 export class UsersListComponent implements OnInit {
 
   public users = [];
+  public userNameSearch = '';
+  public success_message = null;
+  public error_message = null;
 
-  constructor(private _usersService: UsersService) {
+  constructor(private _usersService: UsersService, public router: Router) {
     this.getUsers();
    }
 
@@ -33,13 +37,34 @@ export class UsersListComponent implements OnInit {
     this._usersService.removeUser(id)
     .subscribe(
       data => {
-        console.log(data);
+        this.getUsers();
+        this.success_message = data['message'];
+      },
+      error => {
+        this.error_message = error.error['message'];
+      }
+    );
+    setTimeout(function(){
+      let dom_elements = document.getElementsByClassName('alert');
+      while (dom_elements.length > 0){
+        dom_elements[0].remove();
+      }
+    }, 5000);
+  }
+
+  searchUser(){
+    this._usersService.searchByUsername(this.userNameSearch).subscribe(
+      data => {
+        this.users = data;
+        if (this.users.length === 0){
+          alert('User not found');
+        }
       },
       error => {
         console.log(error);
       }
     )
+    this.userNameSearch = "";
   }
-
 
 }

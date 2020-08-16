@@ -7,11 +7,11 @@ STATUS = [
     ('deleted', 'Deleted')
 ]
 class User(models.Model):
-    userName = models.CharField(max_length=64)
+    userName = models.CharField(max_length=64, unique=True)
     firstName = models.CharField(max_length=64)
     lastName = models.CharField(max_length=64)
     email = models.EmailField(max_length=254)
-    status = models.CharField(max_length=16, choices=STATUS, default='active')
+    status = models.CharField(max_length=16, choices=STATUS, default='inactive')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def serialize(self):

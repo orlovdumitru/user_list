@@ -1,5 +1,23 @@
 <h2>Users</h2>
 
+<div class="row form-group">
+  <div class="col-12 col-sm-8 col-lg-6">
+    <input type="text" class="form-control" name="userNameSearch" (keyup.enter)="searchUser();" [(ngModel)]="userNameSearch">
+  </div>
+  <div class="col-12 col-sm-4 col-lg-2">
+    <button class="btn btn-success mt-xs-3" (click)="searchUser();">Search</button>
+  </div>
+</div>
+
+<div class="alert alert-success" *ngIf='success_message'>
+  {{ success_message }}
+</div>
+
+<div class="alert alert-danger" *ngIf='error_message'>
+  {{ error_message }}
+</div>
+
+
 <table>
   <thead>
     <th>id</th>
@@ -14,21 +32,21 @@
     <tr *ngFor="let user of users">
       <td>{{ user.id }}</td>
       <td>
-        <a routerLink="{{ user.id }}">
+        <a routerLink="users/{{ user.id }}">
           {{ user.userName }}
         </a>
       </td>
-      <td>{{ user.firstName }}</td>
-      <td>{{ user.lastName }}</td>
+      <td>{{ user.firstName | titlecase }}</td>
+      <td>{{ user.lastName | titlecase }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.status }}</td>
+      <td>{{ user.status | titlecase }}</td>
       <td>
-        <a  class="">Edit</a>
-        <a href="#" (click)="removeUser( user.id )" class=" ml-2">Delete</a>
+        <a routerLink="/edit_user/{{ user.id }}" role="button" class="">Edit</a>
+        <a routerLink="" (click)="removeUser( user.id )" class=" ml-2">Delete</a>
       </td>
     </tr>
   </tbody>
 </table>
 <hr>
 
-<a routerLink="" class="btn btn-success">Home</a>
+<a routerLink="/new_user" class="btn btn-success">Add user</a>
