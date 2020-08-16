@@ -11,7 +11,7 @@ class User(models.Model):
     firstName = models.CharField(max_length=64)
     lastName = models.CharField(max_length=64)
     email = models.EmailField(max_length=254)
-    status = models.CharField(max_length=16, choices=STATUS)
+    status = models.CharField(max_length=16, choices=STATUS, default='active')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def serialize(self):
