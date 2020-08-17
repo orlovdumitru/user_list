@@ -18,7 +18,7 @@
 </div>
 
 
-<table>
+<table class="table table-hover">
   <thead>
     <th>id</th>
     <th>User name</th>
@@ -29,22 +29,24 @@
     <th>Actions</th>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.id }}</td>
-      <td>
-        <a routerLink="users/{{ user.id }}">
-          {{ user.userName }}
-        </a>
-      </td>
-      <td>{{ user.firstName | titlecase }}</td>
-      <td>{{ user.lastName | titlecase }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.status | titlecase }}</td>
-      <td>
-        <a routerLink="/edit_user/{{ user.id }}" role="button" class="">Edit</a>
-        <a routerLink="" (click)="removeUser( user.id )" class=" ml-2">Delete</a>
-      </td>
-    </tr>
+
+      <tr *ngFor="let user of users" routerLink="users/{{ user.id }}">
+        <td>{{ user.id }}</td>
+        <td>
+          <!-- <a routerLink="users/{{ user.id }}"> -->
+            {{ user.userName }}
+          <!-- </a> -->
+        </td>
+        <td>{{ user.firstName | titlecase }}</td>
+        <td>{{ user.lastName | titlecase }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.status | titlecase }}</td>
+        <td (click)="$event.stopPropagation();">
+          <a routerLink="/edit_user/{{ user.id }}" role="button" class="">Edit</a>
+          <a routerLink="" (click)="removeUser( user.id )" class=" ml-2">Delete</a>
+        </td>
+      </tr>
+
   </tbody>
 </table>
 <hr>
